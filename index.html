@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Froozy Handcrafted Icecream</title>
     
-    <!-- Fonts: Inter for clean text, Playfair Display for Classy Headings -->
+    <!-- Fonts: Fredoka for playful, bold headings; Quicksand for clean, rounded body text -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Tailwind CSS with Custom Brand Colors -->
+    <!-- Tailwind CSS with Exact Logo Brand Colors -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -18,15 +18,20 @@
                 extend: {
                     colors: {
                         brand: {
-                            blue: '#003B5C',    // Deep classy royal blue based on the logo
-                            teal: '#00A8B5',    // Vibrant teal from the flyer
-                            light: '#F4F9FA',   // Very soft icy blue/white
-                            gold: '#D4AF37'     // Premium gold accent
+                            cyan: '#1aa7b8',   // Main logo text & background
+                            orange: '#f48024', // Left 'O' in logo
+                            yellow: '#fbc31b', // Right 'O' in logo
+                            brown: '#8a633a',  // "Handcrafted Icecream" text
+                            cream: '#fffdf9',  // Warm interior background
                         }
                     },
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        serif: ['"Playfair Display"', 'serif'],
+                        display: ['Fredoka', 'sans-serif'],
+                        body: ['Quicksand', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 20px 40px -15px rgba(26, 167, 184, 0.15)',
+                        'glow': '0 0 20px rgba(244, 128, 36, 0.4)',
                     }
                 }
             }
@@ -37,336 +42,408 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
-        html { scroll-behavior: smooth; }
-        body { font-family: 'Inter', sans-serif; }
-        .font-serif { font-family: 'Playfair Display', serif; }
+        html { scroll-behavior: smooth; overflow-x: hidden; }
+        body { font-family: 'Quicksand', sans-serif; overflow-x: hidden; }
+        h1, h2, h3, h4, h5, .font-display { font-family: 'Fredoka', sans-serif; }
         
-        /* Subtle animation for the hero image */
-        @keyframes subtleZoom {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.05); }
+        /* Menu Flyer Cyan Grid Background */
+        .bg-cyan-grid {
+            background-color: #1aa7b8;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.2) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.2) 1px, transparent 1px);
+            background-size: 35px 35px;
         }
-        .animate-zoom {
-            animation: subtleZoom 20s infinite alternate ease-in-out;
+
+        /* Animations */
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
         }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        
+        @keyframes float-delayed {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(-2deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        .animate-float-delayed { animation: float-delayed 7s ease-in-out infinite 2s; }
+
+        @keyframes blob {
+            0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+            50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+            100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+        }
+        .animate-blob { animation: blob 8s ease-in-out infinite; }
+
+        /* Scroll Reveal Utility Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hide Scrollbar for horizontal mobile swipe */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="bg-[#faf9f6] text-stone-800 antialiased">
+<body class="bg-brand-cream text-brand-brown antialiased selection:bg-brand-orange selection:text-white">
 
-    <!-- Navigation -->
-    <nav id="navbar" class="fixed w-full z-50 transition-all duration-500 bg-transparent py-6">
-        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+    <!-- Sticky App Header -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-white/90 backdrop-blur-md shadow-sm py-3">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 flex justify-between items-center">
             
-            <!-- LOGO AREA (Styled to match the PDF/Flyer layout) -->
+            <!-- LOGO AREA (CSS Recreation of the new image logo) -->
             <div class="flex flex-col cursor-pointer items-center justify-center group" onclick="scrollToSection('home')">
-                <!-- If you have the image file, you can replace the <span> tags with this: -->
-                <!-- <img src="your-logo.png" alt="Froozy Logo" class="h-10 transition-all" id="logo-img" /> -->
-                
-                <span id="logo-main" class="text-3xl md:text-4xl font-black tracking-widest text-white drop-shadow-md transition-colors duration-300">FROOZY</span>
-                <span id="logo-sub" class="text-[0.6rem] md:text-xs tracking-[0.25em] font-medium text-white/90 drop-shadow-md transition-colors duration-300 uppercase mt-0.5">Handcrafted Icecream</span>
+                <!-- Replace with actual img tag if desired: <img src="logo.png" alt="Froozy" class="h-12" /> -->
+                <div class="flex items-center text-4xl font-display font-bold tracking-tight text-brand-cyan">
+                    FR
+                    <!-- Stylized O's mimicking the logo -->
+                    <div class="relative w-8 h-8 mx-0.5 rounded-full border-[4px] border-brand-cyan flex items-center justify-center overflow-hidden">
+                        <div class="absolute w-full h-[80%] bg-brand-orange bottom-0 rounded-b-full"></div>
+                        <div class="absolute w-1.5 h-3 bg-brand-orange -bottom-1 left-2 rounded-full"></div>
+                    </div>
+                    <div class="relative w-8 h-8 mx-0.5 rounded-full border-[4px] border-brand-cyan flex items-center justify-center overflow-hidden">
+                        <div class="absolute w-full h-[80%] bg-brand-yellow bottom-0 rounded-b-full"></div>
+                        <div class="absolute w-1.5 h-3 bg-brand-yellow -bottom-1 right-2 rounded-full"></div>
+                    </div>
+                    ZY
+                </div>
+                <span class="text-[0.6rem] font-bold text-brand-brown tracking-[0.15em] mt-0.5">Handcrafted Icecream</span>
             </div>
 
             <!-- Desktop Nav -->
-            <div class="hidden md:flex space-x-10 items-center">
-                <button onclick="scrollToSection('home')" class="nav-link text-sm font-semibold tracking-wider transition-colors text-white hover:text-brand-teal drop-shadow-sm uppercase">Home</button>
-                <button onclick="scrollToSection('our-promise')" class="nav-link text-sm font-semibold tracking-wider transition-colors text-white hover:text-brand-teal drop-shadow-sm uppercase">Our Promise</button>
-                <button onclick="scrollToSection('menu')" class="nav-link text-sm font-semibold tracking-wider transition-colors text-white hover:text-brand-teal drop-shadow-sm uppercase">Menu</button>
-                <button onclick="scrollToSection('visit-us')" class="nav-link text-sm font-semibold tracking-wider transition-colors text-white hover:text-brand-teal drop-shadow-sm uppercase">Visit Us</button>
+            <div class="hidden md:flex space-x-8 items-center">
+                <button onclick="scrollToSection('our-promise')" class="text-brand-brown hover:text-brand-orange font-bold transition-colors">Our Promise</button>
+                <button onclick="scrollToSection('menu')" class="text-brand-brown hover:text-brand-orange font-bold transition-colors">Menu</button>
+                <button onclick="scrollToSection('vibe')" class="text-brand-brown hover:text-brand-orange font-bold transition-colors">The Vibe</button>
                 
-                <button class="bg-brand-blue hover:bg-brand-teal text-white px-8 py-3 rounded-full font-bold shadow-xl transition-all hover:-translate-y-1">
+                <button class="bg-brand-orange hover:bg-brand-yellow hover:text-brand-brown text-white px-8 py-3 rounded-full font-bold font-display tracking-wide shadow-glow transition-all hover:-translate-y-1">
                     Order Online
                 </button>
             </div>
 
             <!-- Mobile Menu Toggle -->
-            <button class="md:hidden text-brand-blue bg-white/90 p-2.5 rounded-full backdrop-blur-sm shadow-md" onclick="toggleMenu()">
-                <i id="menu-icon" data-lucide="menu" class="w-6 h-6"></i>
+            <button class="md:hidden text-brand-cyan bg-brand-cyan/10 p-2 rounded-xl active:scale-95 transition-transform" onclick="toggleMenu()">
+                <i id="menu-icon" data-lucide="menu" class="w-7 h-7"></i>
             </button>
         </div>
     </nav>
 
-    <!-- Mobile Menu Overlay -->
-    <div id="mobile-menu" class="hidden fixed inset-0 bg-brand-blue/95 backdrop-blur-md z-40 flex-col items-center justify-center space-y-8 pt-16">
-        <button onclick="scrollToSection('home')" class="text-3xl font-serif font-bold text-white hover:text-brand-teal transition-colors">Home</button>
-        <button onclick="scrollToSection('our-promise')" class="text-3xl font-serif font-bold text-white hover:text-brand-teal transition-colors">Our Promise</button>
-        <button onclick="scrollToSection('menu')" class="text-3xl font-serif font-bold text-white hover:text-brand-teal transition-colors">Menu</button>
-        <button onclick="scrollToSection('visit-us')" class="text-3xl font-serif font-bold text-white hover:text-brand-teal transition-colors">Visit Us</button>
+    <!-- Mobile Menu Overlay (Playful & Full Screen) -->
+    <div id="mobile-menu" class="hidden fixed inset-0 bg-brand-cyan z-40 flex-col items-center justify-center space-y-8">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+        <div class="absolute bottom-0 left-0 w-64 h-64 bg-brand-yellow/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+        
+        <button onclick="scrollToSection('home')" class="text-4xl font-display font-bold text-white hover:text-brand-yellow transition-colors">Home</button>
+        <button onclick="scrollToSection('our-promise')" class="text-4xl font-display font-bold text-white hover:text-brand-yellow transition-colors">Our Promise</button>
+        <button onclick="scrollToSection('menu')" class="text-4xl font-display font-bold text-white hover:text-brand-yellow transition-colors">Menu</button>
+        <button onclick="scrollToSection('vibe')" class="text-4xl font-display font-bold text-white hover:text-brand-yellow transition-colors">Visit Us</button>
+        
+        <button class="mt-8 bg-brand-yellow text-brand-brown px-10 py-4 rounded-full font-bold font-display text-xl shadow-lg active:scale-95 transition-transform">
+            Order Online
+        </button>
     </div>
 
-    <!-- Hero Section -->
-    <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden">
-        <!-- Background Image with classy fade -->
-        <div class="absolute inset-0 w-full h-full">
-            <img 
-                src="https://images.unsplash.com/photo-1556690171-9f7cb2f47eb6?q=80&w=2000&auto=format&fit=crop" 
-                alt="Premium Pure Milk Gelato" 
-                class="w-full h-full object-cover animate-zoom"
-            />
-            <!-- Richer gradient overlay for classy look -->
-            <div class="absolute inset-0 bg-gradient-to-r from-brand-blue/90 via-brand-blue/60 to-transparent"></div>
-        </div>
+    <!-- Hero Section (Rich, Mobile-Optimized) -->
+    <section id="home" class="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden flex items-center min-h-[90vh]">
+        <!-- Abstract Blob Backgrounds -->
+        <div class="absolute top-20 -right-20 w-96 h-96 bg-brand-yellow/20 animate-blob mix-blend-multiply filter blur-2xl opacity-70"></div>
+        <div class="absolute -bottom-20 -left-20 w-96 h-96 bg-brand-cyan/20 animate-blob mix-blend-multiply filter blur-2xl opacity-70 animation-delay-2000"></div>
 
-        <div class="relative z-10 max-w-7xl mx-auto px-6 w-full flex flex-col items-start pt-20">
-            <div class="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-md px-5 py-2.5 rounded-full mb-8 border border-white/20 shadow-lg">
-                <i data-lucide="droplet" class="text-brand-teal w-4 h-4"></i>
-                <span class="text-white text-xs font-bold tracking-[0.2em] uppercase">100% Pure Milk Base</span>
+        <div class="max-w-7xl mx-auto px-6 relative w-full flex flex-col md:flex-row items-center justify-between z-10">
+            
+            <!-- Hero Text -->
+            <div class="w-full md:w-1/2 text-center md:text-left mb-12 md:mb-0 reveal">
+                <div class="inline-flex items-center space-x-2 bg-white px-4 py-2 rounded-full mb-6 shadow-sm border border-brand-cyan/20 text-brand-cyan font-bold text-sm tracking-wide">
+                    <i data-lucide="droplet" class="w-4 h-4 fill-brand-cyan"></i>
+                    <span>100% PURE MILK BASE</span>
+                </div>
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-display font-bold text-brand-cyan leading-[1.1] mb-6">
+                    Freshly <br/>
+                    <span class="text-brand-orange">Handcrafted.</span>
+                </h1>
+                <p class="text-lg md:text-xl text-brand-brown/80 mb-8 max-w-md mx-auto md:mx-0 font-medium">
+                    Experience the rich, creamy joy of authentic gelato. Made with pure milk, natural fruits, and zero palm oil.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center md:justify-start space-y-4 sm:space-y-0 sm:space-x-4">
+                    <button onclick="scrollToSection('menu')" class="bg-brand-orange hover:bg-brand-yellow hover:text-brand-brown text-white px-8 py-4 rounded-full font-bold font-display text-lg shadow-glow transition-all hover:-translate-y-1 flex items-center justify-center">
+                        See The Menu <i data-lucide="arrow-right" class="ml-2 w-5 h-5"></i>
+                    </button>
+                </div>
             </div>
-            <h1 class="text-6xl md:text-8xl font-black text-white leading-[1.05] mb-6 font-serif">
-                Purely <br/>
-                <span class="text-brand-teal italic font-light">Handcrafted.</span>
-            </h1>
-            <p class="text-lg md:text-xl text-brand-light max-w-lg mb-10 leading-relaxed font-light">
-                Experience the rich, creamy texture of authentic gelato. Made with love, real milk, and absolutely zero palm oil. Taste the purity in every scoop.
-            </p>
-            <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-5">
-                <button onclick="scrollToSection('menu')" class="bg-brand-teal hover:bg-brand-blue text-white px-10 py-4 rounded-full font-bold text-lg shadow-xl shadow-brand-teal/20 transition-all flex items-center justify-center group">
-                    Explore Menu <i data-lucide="chevron-right" class="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
-                </button>
-                <button onclick="scrollToSection('visit-us')" class="bg-transparent hover:bg-white/10 backdrop-blur-md border border-white/50 text-white px-10 py-4 rounded-full font-bold text-lg transition-all flex items-center justify-center">
-                    Find Our Store
-                </button>
+
+            <!-- Hero Image (Floating Elements) -->
+            <div class="w-full md:w-1/2 relative flex justify-center mt-8 md:mt-0">
+                <!-- Main floating ice cream -->
+                <div class="relative w-64 h-64 md:w-96 md:h-96 animate-float z-20">
+                    <img 
+                        src="https://images.unsplash.com/photo-1570197781417-0c7b41e8c07c?q=80&w=800&auto=format&fit=crop" 
+                        alt="Delicious Gelato" 
+                        class="w-full h-full object-cover rounded-full border-8 border-white shadow-soft"
+                    />
+                </div>
+                <!-- Decorative floating elements -->
+                <div class="absolute top-10 -left-4 md:-left-10 bg-white p-3 md:p-4 rounded-2xl shadow-xl animate-float-delayed z-30 rotate-[-10deg]">
+                    <span class="font-display font-bold text-brand-cyan md:text-lg">No Palm Oil 🚫</span>
+                </div>
+                <div class="absolute bottom-10 -right-4 md:-right-10 bg-white p-3 md:p-4 rounded-2xl shadow-xl animate-float-delayed z-30 rotate-[10deg] text-brand-orange font-display font-bold md:text-lg">
+                    Real Fruits 🍓
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Our Promise Section -->
-    <section id="our-promise" class="py-32 bg-white">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-20">
-                <h2 class="text-xs font-bold text-brand-teal tracking-[0.3em] mb-4 uppercase">Why Choose Froozy</h2>
-                <h3 class="text-4xl md:text-6xl font-serif font-bold text-brand-blue">The Pure Promise</h3>
-                <div class="w-24 h-1 bg-brand-gold mx-auto mt-8 rounded-full"></div>
+    <!-- Our Promise (Values) -->
+    <section id="our-promise" class="py-24 bg-white relative">
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-sm font-bold text-brand-orange tracking-widest mb-3 uppercase">Why Choose Froozy</h2>
+                <h3 class="text-4xl md:text-5xl font-display text-brand-cyan">The Pure Promise</h3>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- Feature 1 -->
-                <div class="bg-brand-light p-12 rounded-[2.5rem] text-center hover:-translate-y-3 transition-all duration-500 shadow-lg hover:shadow-2xl border border-white">
-                    <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-8 shadow-md text-brand-blue">
-                        <i data-lucide="heart" class="w-10 h-10"></i>
+                <div class="bg-brand-cream p-10 rounded-[2rem] text-center hover:-translate-y-2 transition-transform duration-300 border-2 border-transparent hover:border-brand-yellow/30 shadow-sm hover:shadow-xl reveal delay-100">
+                    <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-sm text-brand-orange rotate-3">
+                        <i data-lucide="heart" class="w-8 h-8 fill-brand-orange/20"></i>
                     </div>
-                    <h4 class="text-2xl font-serif font-bold mb-4 text-brand-blue">Zero Palm Oil</h4>
-                    <p class="text-stone-600 leading-relaxed font-light text-lg">We strictly avoid palm oil and artificial fillers, ensuring a healthier treat for you and a better choice for our planet.</p>
+                    <h4 class="text-2xl font-display text-brand-brown mb-3">Zero Palm Oil</h4>
+                    <p class="text-brand-brown/70 font-medium">A healthier treat for your heart and a better choice for our planet. Pure indulgence.</p>
                 </div>
 
                 <!-- Feature 2 -->
-                <div class="bg-brand-blue text-white p-12 rounded-[2.5rem] text-center hover:-translate-y-3 transition-all duration-500 shadow-xl hover:shadow-2xl relative overflow-hidden">
-                    <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 24px 24px;"></div>
-                    <div class="relative z-10">
-                        <div class="w-20 h-20 bg-brand-teal/20 rounded-full flex items-center justify-center mx-auto mb-8 backdrop-blur-md text-brand-teal border border-brand-teal/30">
-                            <i data-lucide="droplet" class="w-10 h-10"></i>
-                        </div>
-                        <h4 class="text-2xl font-serif font-bold mb-4">100% Pure Milk</h4>
-                        <p class="text-brand-light/80 leading-relaxed font-light text-lg">Our gelato's rich, luscious texture comes from using high-quality pure milk. No water-downed shortcuts.</p>
+                <div class="bg-brand-cyan text-white p-10 rounded-[2rem] text-center hover:-translate-y-2 transition-transform duration-300 shadow-soft reveal delay-200">
+                    <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto mb-6 text-white -rotate-3">
+                        <i data-lucide="droplet" class="w-8 h-8 fill-white/50"></i>
                     </div>
+                    <h4 class="text-2xl font-display mb-3">100% Pure Milk</h4>
+                    <p class="text-white/90 font-medium">Our signature creamy texture comes from real dairy. No artificial fillers, no shortcuts.</p>
                 </div>
 
                 <!-- Feature 3 -->
-                <div class="bg-brand-light p-12 rounded-[2.5rem] text-center hover:-translate-y-3 transition-all duration-500 shadow-lg hover:shadow-2xl border border-white">
-                    <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-8 shadow-md text-brand-blue">
-                        <i data-lucide="leaf" class="w-10 h-10"></i>
+                <div class="bg-brand-cream p-10 rounded-[2rem] text-center hover:-translate-y-2 transition-transform duration-300 border-2 border-transparent hover:border-brand-yellow/30 shadow-sm hover:shadow-xl reveal delay-300">
+                    <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-sm text-brand-yellow rotate-3">
+                        <i data-lucide="leaf" class="w-8 h-8 fill-brand-yellow/20"></i>
                     </div>
-                    <h4 class="text-2xl font-serif font-bold mb-4 text-brand-blue">Natural Flavours</h4>
-                    <p class="text-stone-600 leading-relaxed font-light text-lg">From real vanilla beans to fresh seasonal fruits, we source authentic ingredients for an unforgettable taste.</p>
+                    <h4 class="text-2xl font-display text-brand-brown mb-3">Natural Flavours</h4>
+                    <p class="text-brand-brown/70 font-medium">From real vanilla beans to fresh seasonal fruits, taste the authentic ingredients.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Menu Section (Rich Classy Blue Background) -->
-    <section id="menu" class="py-32 bg-brand-blue relative overflow-hidden text-white">
-        <!-- Abstract classy waves/circles in background -->
-        <div class="absolute top-0 right-0 w-[800px] h-[800px] bg-brand-teal/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
-        <div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-brand-teal/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/4"></div>
-
-        <div class="max-w-7xl mx-auto px-6 relative z-10">
-            <div class="text-center mb-20">
-                <p class="text-brand-teal font-bold tracking-[0.2em] uppercase mb-4">Our Menu</p>
-                <h2 class="text-5xl md:text-7xl font-serif font-bold mb-6 text-white drop-shadow-md">100% Fresh Gelato</h2>
-                <p class="text-xl text-brand-light/80 font-light max-w-2xl mx-auto">Crafted daily in our Flavor Lab with absolute purity.</p>
+    <!-- Menu Section (Using the Flyer's Cyan Grid) -->
+    <section id="menu" class="py-24 bg-cyan-grid relative overflow-hidden text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+            <div class="text-center mb-16 reveal">
+                <p class="text-brand-yellow font-bold tracking-widest uppercase mb-2">Our Menu</p>
+                <h2 class="text-5xl md:text-7xl font-display font-bold drop-shadow-md">100% FRESH GELATO</h2>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            <!-- App-like Horizontal Swipeable Container for Mobile, Grid for Desktop -->
+            <div class="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-8 md:grid md:grid-cols-3 md:overflow-visible no-scrollbar reveal">
                 
                 <!-- CUPS CARD -->
-                <div class="bg-white text-stone-800 rounded-[2rem] p-10 shadow-2xl relative overflow-hidden group border-b-8 border-brand-teal">
-                    <div class="absolute top-0 right-0 w-40 h-40 bg-brand-light rounded-bl-full -z-10 transition-transform duration-500 group-hover:scale-125"></div>
-                    <div class="flex justify-between items-start mb-10">
+                <div class="snap-center shrink-0 w-[85vw] md:w-auto bg-white text-brand-brown rounded-[2.5rem] p-8 md:p-10 shadow-2xl relative overflow-hidden group">
+                    <div class="absolute -right-10 -top-10 w-32 h-32 bg-brand-cyan/10 rounded-full transition-transform group-hover:scale-150"></div>
+                    
+                    <div class="flex justify-between items-start mb-8 relative z-10">
                         <div>
-                            <h3 class="text-4xl font-black text-brand-blue font-serif">Cup</h3>
-                            <p class="text-stone-400 font-bold text-sm tracking-widest uppercase mt-1">150 ml</p>
+                            <h3 class="text-4xl font-display text-brand-cyan uppercase">Cup</h3>
+                            <span class="inline-block bg-brand-cyan/10 text-brand-cyan text-xs font-bold px-3 py-1 rounded-full mt-2">150ml</span>
                         </div>
-                        <div class="w-14 h-14 rounded-full bg-brand-light flex items-center justify-center text-brand-teal shadow-inner">
-                            <i data-lucide="ice-cream" class="w-7 h-7"></i>
+                        <div class="w-14 h-14 bg-brand-cyan/10 rounded-2xl flex items-center justify-center text-brand-cyan rotate-[-10deg]">
+                            <i data-lucide="ice-cream" class="w-8 h-8 fill-brand-cyan/20"></i>
                         </div>
                     </div>
                     
-                    <div class="space-y-6">
-                        <div class="flex justify-between items-end border-b border-stone-100 pb-5">
+                    <div class="space-y-4 relative z-10">
+                        <div class="bg-brand-cream p-4 rounded-2xl flex justify-between items-center border border-brand-cyan/10">
                             <div>
-                                <p class="text-xs text-stone-400 uppercase font-bold tracking-widest mb-1">Choose</p>
-                                <p class="text-2xl font-bold text-brand-blue">1 Flavour</p>
+                                <p class="text-xs text-brand-brown/50 font-bold uppercase mb-0.5">You can choose</p>
+                                <p class="text-xl font-display text-brand-cyan">1 FLAVOUR</p>
                             </div>
-                            <p class="text-4xl font-serif font-bold text-brand-teal">90/-</p>
+                            <p class="text-3xl font-display text-brand-cyan">90/-</p>
                         </div>
-                        <div class="flex justify-between items-end pb-2">
+                        <div class="bg-brand-cream p-4 rounded-2xl flex justify-between items-center border border-brand-cyan/10">
                             <div>
-                                <p class="text-xs text-stone-400 uppercase font-bold tracking-widest mb-1">Choose</p>
-                                <p class="text-2xl font-bold text-brand-blue">2 Flavour</p>
+                                <p class="text-xs text-brand-brown/50 font-bold uppercase mb-0.5">You can choose</p>
+                                <p class="text-xl font-display text-brand-cyan">2 FLAVOUR</p>
                             </div>
-                            <p class="text-4xl font-serif font-bold text-brand-teal">100/-</p>
+                            <p class="text-3xl font-display text-brand-cyan">100/-</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- CONES CARD -->
-                <div class="bg-white text-stone-800 rounded-[2rem] p-10 shadow-2xl relative overflow-hidden group border-b-8 border-[#d4af37]">
-                    <div class="absolute top-0 right-0 w-40 h-40 bg-amber-50 rounded-bl-full -z-10 transition-transform duration-500 group-hover:scale-125"></div>
-                    <div class="flex justify-between items-start mb-10">
+                <div class="snap-center shrink-0 w-[85vw] md:w-auto bg-white text-brand-brown rounded-[2.5rem] p-8 md:p-10 shadow-2xl relative overflow-hidden group">
+                    <div class="absolute -right-10 -top-10 w-32 h-32 bg-brand-orange/10 rounded-full transition-transform group-hover:scale-150"></div>
+                    
+                    <div class="flex justify-between items-start mb-8 relative z-10">
                         <div>
-                            <h3 class="text-4xl font-black text-brand-blue font-serif">Cone</h3>
-                            <p class="text-stone-400 font-bold text-sm tracking-widest uppercase mt-1">Crispy & Fresh</p>
+                            <h3 class="text-4xl font-display text-brand-orange uppercase">Cone</h3>
+                            <span class="inline-block bg-brand-orange/10 text-brand-orange text-xs font-bold px-3 py-1 rounded-full mt-2">Crispy</span>
                         </div>
-                        <div class="w-14 h-14 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 shadow-inner border border-amber-200">
-                            <!-- Custom Cone Icon representation -->
-                            <div class="w-6 h-6 border-b-[12px] border-b-transparent border-l-[12px] border-l-amber-600 border-r-[12px] border-r-transparent rotate-45"></div>
+                        <div class="w-14 h-14 bg-brand-orange/10 rounded-2xl flex items-center justify-center text-brand-orange rotate-[10deg]">
+                            <!-- CSS Cone Icon -->
+                            <div class="w-6 h-6 border-b-[12px] border-b-transparent border-l-[12px] border-l-brand-orange border-r-[12px] border-r-transparent rotate-45 opacity-80"></div>
                         </div>
                     </div>
                     
-                    <div class="space-y-6">
-                        <div class="flex justify-between items-end border-b border-stone-100 pb-5">
+                    <div class="space-y-4 relative z-10">
+                        <div class="bg-brand-cream p-4 rounded-2xl flex justify-between items-center border border-brand-orange/10">
                             <div>
-                                <p class="text-xs text-stone-400 uppercase font-bold tracking-widest mb-1">Choose</p>
-                                <p class="text-2xl font-bold text-brand-blue">1 Flavour</p>
+                                <p class="text-xs text-brand-brown/50 font-bold uppercase mb-0.5">You can choose</p>
+                                <p class="text-xl font-display text-brand-orange">1 FLAVOUR</p>
                             </div>
-                            <p class="text-4xl font-serif font-bold text-[#d4af37]">100/-</p>
+                            <p class="text-3xl font-display text-brand-orange">100/-</p>
                         </div>
-                        <div class="flex justify-between items-end pb-2">
+                        <div class="bg-brand-cream p-4 rounded-2xl flex justify-between items-center border border-brand-orange/10">
                             <div>
-                                <p class="text-xs text-stone-400 uppercase font-bold tracking-widest mb-1">Choose</p>
-                                <p class="text-2xl font-bold text-brand-blue">2 Flavour</p>
+                                <p class="text-xs text-brand-brown/50 font-bold uppercase mb-0.5">You can choose</p>
+                                <p class="text-xl font-display text-brand-orange">2 FLAVOUR</p>
                             </div>
-                            <p class="text-4xl font-serif font-bold text-[#d4af37]">110/-</p>
+                            <p class="text-3xl font-display text-brand-orange">110/-</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- COFFEE CARD -->
-                <div class="bg-white text-stone-800 rounded-[2rem] p-10 shadow-2xl relative overflow-hidden group border-b-8 border-stone-800">
-                    <div class="absolute top-0 right-0 w-40 h-40 bg-stone-100 rounded-bl-full -z-10 transition-transform duration-500 group-hover:scale-125"></div>
-                    <div class="flex justify-between items-start mb-10">
+                <div class="snap-center shrink-0 w-[85vw] md:w-auto bg-white text-brand-brown rounded-[2.5rem] p-8 md:p-10 shadow-2xl relative overflow-hidden group">
+                    <div class="absolute -right-10 -top-10 w-32 h-32 bg-brand-brown/5 rounded-full transition-transform group-hover:scale-150"></div>
+                    
+                    <div class="flex justify-between items-start mb-8 relative z-10">
                         <div>
-                            <h3 class="text-4xl font-black text-brand-blue font-serif">Coffee</h3>
-                            <p class="text-stone-400 font-bold text-sm tracking-widest uppercase mt-1">Freshly Brewed</p>
+                            <h3 class="text-4xl font-display text-brand-brown uppercase">Coffee</h3>
+                            <span class="inline-block bg-brand-brown/5 text-brand-brown text-xs font-bold px-3 py-1 rounded-full mt-2">Brewed</span>
                         </div>
-                        <div class="w-14 h-14 rounded-full bg-stone-100 flex items-center justify-center text-stone-600 shadow-inner">
-                            <i data-lucide="coffee" class="w-7 h-7"></i>
+                        <div class="w-14 h-14 bg-brand-brown/5 rounded-2xl flex items-center justify-center text-brand-brown">
+                            <i data-lucide="coffee" class="w-8 h-8"></i>
                         </div>
                     </div>
                     
-                    <div class="space-y-6">
-                        <div class="flex justify-between items-center border-b border-stone-100 pb-4">
-                            <p class="text-lg font-bold text-stone-700">Cappuccino</p>
-                            <p class="text-2xl font-serif font-bold text-brand-blue">70/-</p>
+                    <div class="space-y-3 relative z-10">
+                        <div class="flex justify-between items-center border-b-2 border-dashed border-brand-cream pb-3">
+                            <p class="text-lg font-bold font-display">CAPPUCCINO</p>
+                            <p class="text-2xl font-display text-brand-brown">70/-</p>
                         </div>
-                        <div class="flex justify-between items-center border-b border-stone-100 pb-4">
-                            <p class="text-lg font-bold text-stone-700">Latte</p>
-                            <p class="text-2xl font-serif font-bold text-brand-blue">70/-</p>
+                        <div class="flex justify-between items-center border-b-2 border-dashed border-brand-cream pb-3">
+                            <p class="text-lg font-bold font-display">LATTE</p>
+                            <p class="text-2xl font-display text-brand-brown">70/-</p>
                         </div>
-                        <div class="flex justify-between items-center pb-2">
-                            <p class="text-lg font-bold text-stone-700">Espresso</p>
-                            <p class="text-2xl font-serif font-bold text-brand-blue">70/-</p>
+                        <div class="flex justify-between items-center">
+                            <p class="text-lg font-bold font-display">ESPRESSO</p>
+                            <p class="text-2xl font-display text-brand-brown">70/-</p>
                         </div>
                     </div>
                 </div>
 
             </div>
             
-            <div class="mt-20 text-center">
-                <div class="inline-block border border-brand-teal/30 bg-brand-teal/10 backdrop-blur-sm px-8 py-4 rounded-full">
-                    <p class="text-lg font-light text-brand-light">"Ask our staff about today's special seasonal fruit flavours!"</p>
+            <!-- Mobile Swipe Indicator -->
+            <div class="flex justify-center mt-4 md:hidden gap-2">
+                <div class="w-2 h-2 rounded-full bg-white"></div>
+                <div class="w-2 h-2 rounded-full bg-white/50"></div>
+                <div class="w-2 h-2 rounded-full bg-white/50"></div>
+            </div>
+
+            <div class="mt-16 text-center reveal">
+                <div class="inline-block bg-white text-brand-cyan font-bold px-6 py-3 rounded-full shadow-lg transform rotate-[-2deg]">
+                    ✨ Ask our staff about today's seasonal fruit flavours!
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Store Aesthetic / Vibe Section (Using the warm amber from fro-a.webp) -->
-    <section class="py-32 bg-[#fffdf9] relative overflow-hidden">
+    <!-- Store Aesthetic / Vibe Section (Matches interior photo fro-a.webp) -->
+    <section id="vibe" class="py-24 bg-brand-cream relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="flex flex-col lg:flex-row items-center gap-20">
-                <div class="w-full lg:w-1/2 relative">
-                    <div class="rounded-t-[10rem] rounded-b-[2rem] overflow-hidden shadow-2xl relative z-10 border-8 border-white">
+            <div class="flex flex-col lg:flex-row items-center gap-16">
+                
+                <!-- Image side -->
+                <div class="w-full lg:w-1/2 relative reveal">
+                    <!-- Frame matching the arch from the photo -->
+                    <div class="rounded-t-full rounded-b-3xl overflow-hidden shadow-2xl relative z-10 border-8 border-white bg-brand-yellow/20">
                          <img 
                             src="https://images.unsplash.com/photo-1555507015-0810756eb100?q=80&w=1200&auto=format&fit=crop" 
                             alt="Froozy Store Interior Aesthetic" 
-                            class="w-full h-[600px] object-cover"
+                            class="w-full h-[500px] object-cover mix-blend-overlay opacity-90"
                         />
                     </div>
-                    <!-- Amber abstract shape behind image matching store paint -->
-                    <div class="absolute -bottom-10 -left-10 w-3/4 h-3/4 bg-[#f3cd78]/30 rounded-full blur-2xl -z-0"></div>
+                    <!-- Decorative Stripes mimicking the seating base -->
+                    <div class="absolute -bottom-6 left-10 w-3/4 h-12 bg-[repeating-linear-gradient(90deg,#fff,#fff_20px,#333_20px,#333_40px)] rounded-xl shadow-lg -z-10 rotate-2"></div>
                 </div>
                 
-                <div class="w-full lg:w-1/2">
-                    <h2 class="text-xs font-bold text-[#d4af37] tracking-[0.3em] mb-4 uppercase">The Experience</h2>
-                    <h3 class="text-5xl md:text-6xl font-serif font-bold text-brand-blue mb-8 leading-tight">A Space Designed <br/>for Joy.</h3>
-                    <p class="text-xl text-stone-600 mb-10 leading-relaxed font-light">
-                        Step into Froozy and step out of the rush. Our Belagavi outlet is designed with warm tones, comfortable seating, and an inviting atmosphere perfect for catching up with friends or treating the family.
+                <!-- Text side -->
+                <div class="w-full lg:w-1/2 reveal delay-200 text-center md:text-left">
+                    <h2 class="text-sm font-bold text-brand-orange tracking-widest mb-3 uppercase">The Experience</h2>
+                    <h3 class="text-5xl md:text-6xl font-display text-brand-brown mb-6">A Space Designed for Joy.</h3>
+                    <p class="text-xl text-brand-brown/70 mb-10 font-medium">
+                        Our Belagavi outlet features warm amber tones, cozy booth seating, and a playful archway—perfect for hanging out with friends or treating the family.
                     </p>
                     
-                    <div class="flex items-center space-x-6 mb-12 bg-white p-6 rounded-2xl shadow-sm border border-stone-100">
-                        <div class="w-14 h-14 bg-brand-light rounded-full flex items-center justify-center shadow-inner text-brand-teal shrink-0">
-                            <i data-lucide="camera" class="w-6 h-6"></i>
+                    <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6 mb-10">
+                        <div class="flex items-center gap-4 bg-white px-6 py-4 rounded-2xl shadow-sm w-full">
+                            <div class="w-12 h-12 bg-brand-yellow/20 rounded-xl flex items-center justify-center text-brand-yellow shrink-0">
+                                <i data-lucide="camera" class="w-6 h-6"></i>
+                            </div>
+                            <p class="font-bold text-brand-brown text-left">Insta-worthy warm decor</p>
                         </div>
-                        <div>
-                            <p class="font-bold text-brand-blue text-lg">Insta-worthy Decor</p>
-                            <p class="text-stone-500 font-light text-sm">Snap a picture by our warm arch walls.</p>
+                        <div class="flex items-center gap-4 bg-white px-6 py-4 rounded-2xl shadow-sm w-full">
+                            <div class="w-12 h-12 bg-brand-cyan/20 rounded-xl flex items-center justify-center text-brand-cyan shrink-0">
+                                <i data-lucide="users" class="w-6 h-6"></i>
+                            </div>
+                            <p class="font-bold text-brand-brown text-left">Cozy family seating</p>
                         </div>
                     </div>
 
-                    <a 
-                        href="https://www.instagram.com/froozyicecream/?hl=en" 
-                        target="_blank" 
-                        rel="noreferrer"
-                        class="inline-flex items-center px-10 py-4 bg-brand-blue text-white rounded-full font-bold shadow-xl hover:shadow-2xl transition-all hover:-translate-y-1 hover:bg-brand-teal group"
-                    >
-                        <i data-lucide="instagram" class="mr-3 w-5 h-5 group-hover:scale-110 transition-transform"></i> Follow our Journey
+                    <a href="https://www.instagram.com/froozyicecream/?hl=en" target="_blank" rel="noreferrer" class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-purple-500 via-pink-500 to-brand-orange text-white rounded-full font-bold shadow-lg hover:shadow-xl transition-transform hover:scale-105 font-display text-lg">
+                        <i data-lucide="instagram" class="mr-2 w-5 h-5"></i> Follow our Journey
                     </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer & Visit Us -->
-    <footer id="visit-us" class="bg-[#051e2e] text-white pt-24 pb-12 border-t-8 border-brand-teal">
+    <!-- Footer -->
+    <footer id="visit-us" class="bg-brand-brown text-white pt-20 pb-10">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
                 
-                <div class="lg:col-span-2">
-                    <div class="flex flex-col mb-6">
-                        <span class="text-4xl font-black tracking-widest text-white">FROOZY</span>
-                        <span class="text-[0.65rem] tracking-[0.25em] font-medium text-brand-teal uppercase mt-1">Handcrafted Icecream</span>
+                <div class="lg:col-span-2 text-center md:text-left">
+                    <div class="flex flex-col items-center md:items-start mb-6">
+                        <span class="text-4xl font-display font-bold tracking-widest text-brand-cyan">FROOZY</span>
+                        <span class="text-[0.65rem] tracking-[0.2em] font-bold text-brand-yellow uppercase mt-1">Handcrafted Icecream</span>
                     </div>
-                    <p class="text-brand-light/60 leading-relaxed max-w-sm font-light text-lg">
+                    <p class="text-white/70 font-medium max-w-sm mx-auto md:mx-0">
                         Redefining the gelato experience in Belagavi with pure milk, zero palm oil, and 100% authentic flavours.
                     </p>
                 </div>
 
-                <div>
-                    <h4 class="text-xl font-serif font-bold mb-6 text-white">Visit Us</h4>
-                    <ul class="space-y-4 text-brand-light/70 font-light">
-                        <li class="flex items-start">
-                            <i data-lucide="map-pin" class="text-brand-teal mr-4 mt-1 flex-shrink-0 w-6 h-6"></i>
-                            <span class="leading-relaxed">Tejpal Arcade, RPD College Rd,<br/>beside Ajanta Cafe, Ranade Colony,<br/>Hindwadi, Belagavi,<br/>Karnataka 590006</span>
+                <div class="text-center md:text-left">
+                    <h4 class="text-xl font-display font-bold mb-6 text-brand-orange">Visit Us</h4>
+                    <ul class="space-y-4 text-white/80 font-medium">
+                        <li class="flex items-start justify-center md:justify-start">
+                            <i data-lucide="map-pin" class="text-brand-orange mr-3 mt-1 flex-shrink-0 w-5 h-5"></i>
+                            <span class="text-left">Tejpal Arcade, RPD College Rd,<br/>beside Ajanta Cafe, Ranade Colony,<br/>Hindwadi, Belagavi,<br/>Karnataka 590006</span>
                         </li>
                     </ul>
                 </div>
 
-                <div>
-                    <h4 class="text-xl font-serif font-bold mb-6 text-white">Connect</h4>
-                    <div class="flex space-x-4">
-                        <a href="https://www.instagram.com/froozyicecream/?hl=en" target="_blank" rel="noreferrer" class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-brand-teal hover:text-white transition-all text-white border border-white/20">
+                <div class="text-center md:text-left">
+                    <h4 class="text-xl font-display font-bold mb-6 text-brand-orange">Connect</h4>
+                    <div class="flex space-x-4 justify-center md:justify-start">
+                        <a href="https://www.instagram.com/froozyicecream/?hl=en" target="_blank" rel="noreferrer" class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-brand-cyan transition-colors text-white">
                             <i data-lucide="instagram" class="w-5 h-5"></i>
                         </a>
-                        <div class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-brand-teal hover:text-white transition-all text-white border border-white/20 cursor-pointer">
+                        <div class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-brand-cyan transition-colors text-white cursor-pointer">
                             <i data-lucide="facebook" class="w-5 h-5"></i>
                         </div>
                     </div>
@@ -374,9 +451,9 @@
 
             </div>
             
-            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center">
-                <p class="text-brand-light/40 text-sm mb-4 md:mb-0 font-light">© <span id="year"></span> Froozy Handcrafted Icecream. All rights reserved.</p>
-                <div class="flex space-x-8 text-sm text-brand-light/40 font-light">
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-center md:text-left">
+                <p class="text-white/50 text-sm mb-4 md:mb-0 font-bold">© <span id="year"></span> Froozy Handcrafted Icecream. All rights reserved.</p>
+                <div class="flex space-x-6 text-sm text-white/50 font-bold">
                     <button class="hover:text-white transition-colors">Privacy Policy</button>
                     <button class="hover:text-white transition-colors">Terms of Service</button>
                 </div>
@@ -388,8 +465,6 @@
     <script>
         // Initialize Lucide Icons
         lucide.createIcons();
-
-        // Set current year in footer
         document.getElementById('year').textContent = new Date().getFullYear();
 
         // Mobile Menu Logic
@@ -400,10 +475,12 @@
             if (menu.classList.contains('hidden')) {
                 menu.classList.remove('hidden');
                 menu.classList.add('flex');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
                 icon.setAttribute('data-lucide', 'x');
             } else {
                 menu.classList.remove('flex');
                 menu.classList.add('hidden');
+                document.body.style.overflow = 'auto'; // Enable scrolling
                 icon.setAttribute('data-lucide', 'menu');
             }
             lucide.createIcons();
@@ -414,55 +491,36 @@
             if (element) {
                 element.scrollIntoView({ behavior: 'smooth' });
             }
-            // Close mobile menu if it's open
+            // Close mobile menu
             const menu = document.getElementById('mobile-menu');
             const icon = document.getElementById('menu-icon');
             if (!menu.classList.contains('hidden')) {
                 menu.classList.remove('flex');
                 menu.classList.add('hidden');
+                document.body.style.overflow = 'auto';
                 icon.setAttribute('data-lucide', 'menu');
                 lucide.createIcons();
             }
         }
 
-        // Sticky Navbar Scrolling Logic (Updated for Brand Colors)
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('navbar');
-            const logoMain = document.getElementById('logo-main');
-            const logoSub = document.getElementById('logo-sub');
-            const navLinks = document.querySelectorAll('.nav-link');
-            
-            if (window.scrollY > 50) {
-                // Scrolled state - White Navbar
-                nav.classList.remove('bg-transparent', 'py-6');
-                nav.classList.add('bg-white', 'shadow-lg', 'py-3');
-                
-                logoMain.classList.remove('text-white', 'drop-shadow-md');
-                logoMain.classList.add('text-brand-blue');
-                
-                logoSub.classList.remove('text-white/90', 'drop-shadow-md');
-                logoSub.classList.add('text-brand-teal');
+        // Scroll Reveal Animation Observer
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealOptions = {
+            threshold: 0.15,
+            rootMargin: "0px 0px -50px 0px"
+        };
+        
+        const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target); // Run once
+                }
+            });
+        }, revealOptions);
 
-                navLinks.forEach(link => {
-                    link.classList.remove('text-white', 'hover:text-brand-teal', 'drop-shadow-sm');
-                    link.classList.add('text-brand-blue', 'hover:text-brand-teal');
-                });
-            } else {
-                // Top state - Transparent Navbar
-                nav.classList.remove('bg-white', 'shadow-lg', 'py-3');
-                nav.classList.add('bg-transparent', 'py-6');
-                
-                logoMain.classList.remove('text-brand-blue');
-                logoMain.classList.add('text-white', 'drop-shadow-md');
-                
-                logoSub.classList.remove('text-brand-teal');
-                logoSub.classList.add('text-white/90', 'drop-shadow-md');
-
-                navLinks.forEach(link => {
-                    link.classList.remove('text-brand-blue', 'hover:text-brand-teal');
-                    link.classList.add('text-white', 'hover:text-brand-teal', 'drop-shadow-sm');
-                });
-            }
+        revealElements.forEach(el => {
+            revealOnScroll.observe(el);
         });
     </script>
 </body>
