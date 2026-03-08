@@ -99,24 +99,44 @@
     <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-white/90 backdrop-blur-md shadow-sm py-3">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 flex justify-between items-center">
             
-            <!-- LOGO AREA (CSS Recreation of the new image logo) -->
+            <!-- LOGO AREA (Using uploaded image + Custom Infinity SVG Fallback) -->
             <div class="flex flex-col cursor-pointer items-center justify-center group" onclick="scrollToSection('home')">
-                <!-- If you want to use the uploaded logo image, uncomment the line below and delete the text block: -->
-                <!-- <img src="image_3e104e.png" alt="Froozy" class="h-12" /> -->
-                <div class="flex items-center text-4xl font-display font-bold tracking-tight text-brand-cyan">
-                    FR
-                    <!-- Stylized O's mimicking the logo -->
-                    <div class="relative w-8 h-8 mx-0.5 rounded-full border-[4px] border-brand-cyan flex items-center justify-center overflow-hidden">
-                        <div class="absolute w-full h-[80%] bg-brand-orange bottom-0 rounded-b-full"></div>
-                        <div class="absolute w-1.5 h-3 bg-brand-orange -bottom-1 left-2 rounded-full"></div>
+                <!-- The actual image logo for when hosted on GitHub -->
+                <img src="image_3e104e.png" alt="Froozy Handcrafted Icecream" class="h-12 md:h-16 object-contain drop-shadow-sm transition-transform group-hover:scale-105" id="nav-logo-img" onerror="this.style.display='none'; document.getElementById('nav-logo-fallback').style.display='flex';" />
+                
+                <!-- SVG/CSS Fallback for preview in Canvas (Perfect Infinity OO) -->
+                <div id="nav-logo-fallback" class="hidden flex-col items-center justify-center">
+                    <div class="flex items-center text-[2.5rem] md:text-5xl font-display font-bold tracking-tight text-brand-cyan leading-none">
+                        <span>FR</span>
+                        <!-- Infinity OO SVG mimicking the uploaded logo -->
+                        <svg viewBox="0 0 120 60" class="w-[4.5rem] md:w-24 h-auto mx-0.5 -mt-1 drop-shadow-sm">
+                            <defs>
+                                <linearGradient id="orangeGradNav" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stop-color="#f8a55f" />
+                                    <stop offset="100%" stop-color="#f48024" />
+                                </linearGradient>
+                                <linearGradient id="yellowGradNav" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stop-color="#fef0ab" />
+                                    <stop offset="100%" stop-color="#fbc31b" />
+                                </linearGradient>
+                            </defs>
+                            <!-- Infinity Path (Cyan Background/Stroke) -->
+                            <path d="M 30 10 C 10 10, 5 20, 5 30 C 5 40, 10 50, 30 50 C 45 50, 50 40, 60 30 C 70 20, 75 10, 90 10 C 110 10, 115 20, 115 30 C 115 40, 110 50, 90 50 C 75 50, 70 40, 60 30 C 50 20, 45 10, 30 10 Z" fill="none" stroke="#1aa7b8" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+                            
+                            <!-- Orange Fill & Drips -->
+                            <circle cx="30" cy="30" r="15" fill="url(#orangeGradNav)" />
+                            <path d="M 22 40 Q 22 55 24 55 Q 26 55 26 40 Z" fill="#f48024"/>
+                            <path d="M 34 43 Q 34 50 36 50 Q 38 50 38 43 Z" fill="#f48024"/>
+
+                            <!-- Yellow Fill & Drips -->
+                            <circle cx="90" cy="30" r="15" fill="url(#yellowGradNav)" />
+                            <path d="M 83 43 Q 83 48 85 48 Q 87 48 87 43 Z" fill="#fbc31b"/>
+                            <path d="M 93 40 Q 93 54 95 54 Q 97 54 97 40 Z" fill="#fbc31b"/>
+                        </svg>
+                        <span>ZY</span>
                     </div>
-                    <div class="relative w-8 h-8 mx-0.5 rounded-full border-[4px] border-brand-cyan flex items-center justify-center overflow-hidden">
-                        <div class="absolute w-full h-[80%] bg-brand-yellow bottom-0 rounded-b-full"></div>
-                        <div class="absolute w-1.5 h-3 bg-brand-yellow -bottom-1 right-2 rounded-full"></div>
-                    </div>
-                    ZY
+                    <span class="text-[0.6rem] md:text-[0.7rem] font-bold text-brand-brown tracking-[0.15em] mt-1 uppercase">Handcrafted Icecream</span>
                 </div>
-                <span class="text-[0.6rem] font-bold text-brand-brown tracking-[0.15em] mt-0.5">Handcrafted Icecream</span>
             </div>
 
             <!-- Desktop Nav -->
@@ -425,8 +445,28 @@
                 
                 <div class="lg:col-span-2 text-center md:text-left">
                     <div class="flex flex-col items-center md:items-start mb-6">
-                        <span class="text-4xl font-display font-bold tracking-widest text-brand-cyan">FROOZY</span>
-                        <span class="text-[0.65rem] tracking-[0.2em] font-bold text-brand-yellow uppercase mt-1">Handcrafted Icecream</span>
+                        <!-- Footer Logo (Using uploaded image + Background pill for contrast against the brown footer) -->
+                        <div class="bg-white/95 px-6 py-3 rounded-2xl shadow-sm inline-block">
+                            <img src="image_3e104e.png" alt="Froozy Handcrafted Icecream" class="h-10 object-contain" id="footer-logo-img" onerror="this.style.display='none'; document.getElementById('footer-logo-fallback').style.display='flex';" />
+                            
+                            <!-- SVG/CSS Fallback for preview -->
+                            <div id="footer-logo-fallback" class="hidden flex-col items-center justify-center">
+                                <div class="flex items-center text-3xl font-display font-bold tracking-tight text-brand-cyan leading-none">
+                                    <span>FR</span>
+                                    <svg viewBox="0 0 120 60" class="w-16 h-auto mx-0.5 -mt-1 drop-shadow-sm">
+                                        <path d="M 30 10 C 10 10, 5 20, 5 30 C 5 40, 10 50, 30 50 C 45 50, 50 40, 60 30 C 70 20, 75 10, 90 10 C 110 10, 115 20, 115 30 C 115 40, 110 50, 90 50 C 75 50, 70 40, 60 30 C 50 20, 45 10, 30 10 Z" fill="none" stroke="#1aa7b8" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <circle cx="30" cy="30" r="15" fill="#f48024" />
+                                        <path d="M 22 40 Q 22 55 24 55 Q 26 55 26 40 Z" fill="#f48024"/>
+                                        <path d="M 34 43 Q 34 50 36 50 Q 38 50 38 43 Z" fill="#f48024"/>
+                                        <circle cx="90" cy="30" r="15" fill="#fbc31b" />
+                                        <path d="M 83 43 Q 83 48 85 48 Q 87 48 87 43 Z" fill="#fbc31b"/>
+                                        <path d="M 93 40 Q 93 54 95 54 Q 97 54 97 40 Z" fill="#fbc31b"/>
+                                    </svg>
+                                    <span>ZY</span>
+                                </div>
+                                <span class="text-[0.5rem] font-bold text-brand-brown tracking-[0.15em] mt-0.5 uppercase">Handcrafted Icecream</span>
+                            </div>
+                        </div>
                     </div>
                     <p class="text-white/70 font-medium max-w-sm mx-auto md:mx-0">
                         Redefining the gelato experience in Belagavi with pure milk, zero palm oil, and 100% authentic flavours.
