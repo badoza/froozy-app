@@ -99,24 +99,10 @@
     <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-white/90 backdrop-blur-md shadow-sm py-3">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 flex justify-between items-center">
             
-            <!-- LOGO AREA (CSS Recreation of the new image logo) -->
+            <!-- LOGO AREA (Using exact uploaded image) -->
             <div class="flex flex-col cursor-pointer items-center justify-center group" onclick="scrollToSection('home')">
-                <!-- If you want to use the uploaded logo image, uncomment the line below and delete the text block: -->
-                <!-- <img src="image_3e104e.png" alt="Froozy" class="h-12" /> -->
-                <div class="flex items-center text-4xl font-display font-bold tracking-tight text-brand-cyan">
-                    FR
-                    <!-- Stylized O's mimicking the logo -->
-                    <div class="relative w-8 h-8 mx-0.5 rounded-full border-[4px] border-brand-cyan flex items-center justify-center overflow-hidden">
-                        <div class="absolute w-full h-[80%] bg-brand-orange bottom-0 rounded-b-full"></div>
-                        <div class="absolute w-1.5 h-3 bg-brand-orange -bottom-1 left-2 rounded-full"></div>
-                    </div>
-                    <div class="relative w-8 h-8 mx-0.5 rounded-full border-[4px] border-brand-cyan flex items-center justify-center overflow-hidden">
-                        <div class="absolute w-full h-[80%] bg-brand-yellow bottom-0 rounded-b-full"></div>
-                        <div class="absolute w-1.5 h-3 bg-brand-yellow -bottom-1 right-2 rounded-full"></div>
-                    </div>
-                    ZY
-                </div>
-                <span class="text-[0.6rem] font-bold text-brand-brown tracking-[0.15em] mt-0.5">Handcrafted Icecream</span>
+                <!-- The exact image logo you uploaded -->
+                <img src="image_abe9e4.png" alt="Froozy Handcrafted Icecream" class="h-12 md:h-16 object-contain drop-shadow-sm transition-transform group-hover:scale-105" />
             </div>
 
             <!-- Desktop Nav -->
@@ -425,8 +411,10 @@
                 
                 <div class="lg:col-span-2 text-center md:text-left">
                     <div class="flex flex-col items-center md:items-start mb-6">
-                        <span class="text-4xl font-display font-bold tracking-widest text-brand-cyan">FROOZY</span>
-                        <span class="text-[0.65rem] tracking-[0.2em] font-bold text-brand-yellow uppercase mt-1">Handcrafted Icecream</span>
+                        <!-- Footer Logo (Using exact uploaded image) -->
+                        <div class="bg-white/95 px-6 py-3 rounded-2xl shadow-sm inline-block">
+                            <img src="image_abe9e4.png" alt="Froozy Handcrafted Icecream" class="h-10 md:h-14 object-contain" />
+                        </div>
                     </div>
                     <p class="text-white/70 font-medium max-w-sm mx-auto md:mx-0">
                         Redefining the gelato experience in Belagavi with pure milk, zero palm oil, and 100% authentic flavours.
